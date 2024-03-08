@@ -4,13 +4,25 @@ import Header from "./Components/Header";
 import Body from "./Components/Body";
 import { Provider } from "react-redux";
 import store from "./utils/store";
-import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import MainContainer from "./Components/MainContainer";
+import WatchPage from "./Components/WatchPage";
 
 const appRouter = createBrowserRouter(
   [
     {
       path: "/",
-      element: <div>Home</div>
+    element: <Body />,
+    children: [
+      {
+        path: "/",
+        element: <MainContainer />
+      },
+      {
+        path: "watch",
+        element: <WatchPage/>
+      }
+    ]
     }
   ]
 )
@@ -20,25 +32,8 @@ function App() {
     <div>
         {/* <h1 className="text-red-500 font-bold text-3xl">Welcome to My Youtube Project</h1> */}
         <Header />
-        <Body />
-        {
-          /***
-           * Head
-           * Body
-           *    - sidebar 
-           *            - sidebar menu Items (home, shorts, trending, subscriptions, liked videos)
-           *    - main container
-           *            - buttons list (All, Music, Games, Telugu videos, English videos, Hindi videos, Etc..)
-           *            - videos container 
-           *                  - videos (cards)
-           * 
-           * 
-           * 
-           * 
-           * 
-           * 
-           */
-        }
+        <RouterProvider router={appRouter}/>
+       
     </div>
     </Provider>
   );

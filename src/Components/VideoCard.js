@@ -1,7 +1,7 @@
 import React from 'react'
 
 const VideoCard = ({info}) => {
-    console.log(info);
+    // console.log(info);
     const { snippet, statistics } = {...info};  //destructuring assignment
     const {channelTitle, title, thumbnails} = {...snippet};
     // const {snippet, statistics} = info;
