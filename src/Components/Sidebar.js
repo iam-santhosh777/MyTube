@@ -21,7 +21,7 @@ const Sidebar = () => {
         <img alt="youtubeLogo" src="https://logodownload.org/wp-content/uploads/2014/10/youtube-logo-9.png" className="h-6 mx-3"/>
         </div>
       <ul className='mt-[13vh] flex flex-col gap-2'>
-        <Link to='/'><li className='flex ml-2'> <img className='h-6 pr-3' alt='SideHomeIcon' src="https://res.cloudinary.com/dd5vs48c2/image/upload/v1709791194/n8o6m5br7ih7xcmoyflm.png" /> Home</li></Link>
+        <Link to='/MyTube'><li className='flex ml-2'> <img className='h-6 pr-3' alt='SideHomeIcon' src="https://res.cloudinary.com/dd5vs48c2/image/upload/v1709791194/n8o6m5br7ih7xcmoyflm.png" /> Home</li></Link>
         <li className='flex ml-2 items-center'> 
           <img className='h-9 ' alt='shortsIcon' src='https://res.cloudinary.com/dd5vs48c2/image/upload/v1709833241/shorts_xxy6tn.jpg'/>
           Shorts</li>
