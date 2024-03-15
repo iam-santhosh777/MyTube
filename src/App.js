@@ -19,7 +19,7 @@ const appRouter = createBrowserRouter(
           element: <MainContainer />
         },
         {
-          path: "watch",
+          path: "/Youtube-Clone/watch",
           element: <WatchPage/>
         }
       ]
