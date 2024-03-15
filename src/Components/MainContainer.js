@@ -24,6 +24,7 @@ const MainContainer = () => {
                         <img className="h-8" alt="ShortsIcon" src="https://res.cloudinary.com/dd5vs48c2/image/upload/v1709833241/shorts_xxy6tn.jpg" />
                         <h1 className="text-xs">Shorts</h1>
                     </li>
+                    
                     <li className="flex flex-col justify-around items-center my-4">
                         <img className="h-6" alt="SubIcon" src="https://res.cloudinary.com/dd5vs48c2/image/upload/v1709791415/youtube_cgwnzm.png" />
                         <h1 className="text-xs">Subscriptions</h1>

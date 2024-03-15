@@ -29,7 +29,6 @@ const Sidebar = () => {
           <img className='h-6 pr-3' alt='trendingIcon' src='https://res.cloudinary.com/dd5vs48c2/image/upload/v1709791415/youtube_cgwnzm.png'/>
           Subscriptions</li>
       </ul>
-      
       <h1 className='font-bold my-2'>You</h1>
         <ul className='py-1 '>
           <li className='flex ml-2 mt-2'>
