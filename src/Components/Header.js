@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../utils/appSlice";
+import { search_suggestion_api } from "../utils/Constants";
+import { cacheResults } from "../utils/searchSlice";
 
 const Header = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
+    const [showSuggestion, setShowSuggestion] = useState(false);
     const dispatch = useDispatch();
 
+    const searchCache = useSelector((state) => state.search);
+
+    useEffect(() => {
+        // api call 
+        const timer = setTimeout(() => {
+            if(searchCache[searchQuery]){
+                setSearchSuggestions(searchCache[searchQuery])
+            } else{
+                getSearchSuggestions()
+            }
+
+            getSearchSuggestions()
+        }, 200);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [searchQuery])
+
+    const getSearchSuggestions = async () => {
+        console.log("API call - " + searchQuery);
+        // api call
+        const data = await fetch(search_suggestion_api + searchQuery);
+        const json = await data.json();
+        // console.log(json[1]);
+        setSearchSuggestions(json[1]);
+        dispatch(cacheResults({[searchQuery]: json[1]}));
+    }
+
     const toggleMenuHandler = () => {
-        dispatch(toggleSidebar());
-        
+        dispatch(toggleSidebar());   
     }
     return (
         <div className="grid grid-flow-col p-2 m-2 items-center">
@@ -22,10 +55,29 @@ const Header = () => {
             </div>
 
             <div className="col-span-10 items-center">
-                <input type="text" className="w-1/2 border border-gray-400 rounded-l-3xl p-2"/>
+                <div>
+                <input type="text" className="w-1/2 border border-gray-400 rounded-l-3xl p-2"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSuggestion(true)}
+                onBlur={() => setShowSuggestion(false)}
+                />
                 <button className="border border-gray-400 p-2 px-4 bg-gray-100 rounded-r-3xl"> 
                 <FontAwesomeIcon icon={faSearch} />
                 </button>
+                </div>
+                { showSuggestion &&
+                    (<div>
+                    <ul className="absolute bg-white w-[37%] rounded-lg px-5 py-2">
+                        {
+                            searchSuggestions.map((suggestion) => (
+                                <li key={suggestion} className="flex gap-2 items-center hover:bg-gray-100 cursor-pointer"><FontAwesomeIcon icon={faSearch} />{suggestion}</li>
+                            ))
+                        }
+                        
+                    </ul>
+                </div>)
+                }
             </div>
 
 

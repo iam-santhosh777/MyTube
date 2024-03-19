@@ -1,16 +1,6 @@
 import VideoContainer from "./VideoContainer";
 import ButtonList from "./ButtonList";
 
-
-// const MainContainer = () => {
-//     return (
-//         <div className="py-1 px-2 m-3">
-//             <ButtonList />
-//             <VideoContainer />
-//         </div>
-//     )
-// }
-
 const MainContainer = () => {
     return (
         <div className="flex">

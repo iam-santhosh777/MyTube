@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const VideoCard = ({info}) => {
     // console.log(info);
     const { snippet, statistics } = {...info};  //destructuring assignment
@@ -10,12 +11,18 @@ const VideoCard = ({info}) => {
     <div className='p-2 m-2 w-64 shadow-lg'>
         <img className='rounded-lg' alt='thumbnailImg' src={thumbnails.medium.url} />
         <ul>
+            {// here i want channel logo image
+            /*<li><img src={channelInfo.snippet.thumbnails.default.url} alt='channelLogo'/></li>*/
+            
+            }
             <li className='font-bold text-sm py-2 w-full text-left'>{title}</li>
             <li>{channelTitle}</li>
             <li>{statistics.viewCount} Views</li>
         </ul>
     </div>
+    
   )
 }
+
 
 export default VideoCard

@@ -68,3 +68,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# key points 
+1. using debouncing for input field to search item for better UX
+ debouncing means that we will wait until user stops typing before making an API call . This improves performance by reducing unnecessary calls
+ performance: 
+  - iphone pro max = 12 letters => 12 calls * 1000 people /s = 12k requests per second (without debouncing)
+  - debounce function reduces number of requests significantly
+    iphone pro max = 12 letters => 3 calls * 1000 people /s = ~3000 requests per second (with debouncing)
+
+ debouncing with 200ms 
+ - if difference between 2 key strokes is < 200ms => decline the api call
+ - if difference between 2 key strokes is > 200ms =>  make an api call
+
+Cache: 
+
+time complexity to search in array = O(n)
+
+[
+
+]

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { YOUTUBE_API } from "../utils/Constants";
-import VideoCard from "./VideoCard";
+import VideoCard, { AdVideoCard } from "./VideoCard";
 import { Link } from "react-router-dom";
 const VideoContainer = () => {
 
     const [videos, setVideos] = useState([]);
+    
 
     useEffect(() => {
         fetchData();
@@ -20,10 +21,12 @@ const VideoContainer = () => {
 
     return (
         <div className="flex flex-wrap">
-            {/* <VideoCard info={videos[1]}/> */}
             {
                 videos.map((video) => (
-                    <Link to={"/MyTube/watch?v=" + video.id} key={video.id}><VideoCard info={video} /></Link>
+                    <Link to={"/MyTube/watch?v=" + video.id} key={video.id}>
+                        <VideoCard info={video} />
+                        
+                    </Link>
                 ))
             }
         </div>

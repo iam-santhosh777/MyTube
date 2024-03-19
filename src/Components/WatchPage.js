@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { closdeSidebar } from "../utils/appSlice";
 import { useSearchParams } from "react-router-dom";
 import VideoContainer from './VideoContainer';
+import Comments from './Comments';
 
 
 const WatchPage = () => {
@@ -10,6 +11,7 @@ const WatchPage = () => {
 
   const [videoData, setVideoData] = useState(null);
   const [channelData, setChannelData] = useState(null);
+  const [commentsData, setCommentsData] = useState(null);
   let [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
   
@@ -17,21 +19,26 @@ const WatchPage = () => {
   useEffect(() => {
     dispatch(closdeSidebar());
     fetchData();
-  }, []);
+  }, [videoData]);
   
 
   const fetchData = async () => {
-    const json = await fetch("https://www.googleapis.com/youtube/v3/videos?id=" + videoId +   "&key=AIzaSyDEwgieUKazTBKmC_2xS5WZZJ6OXSp_2zs&part=snippet,contentDetails,statistics,status");
+    const json = await fetch("https://www.googleapis.com/youtube/v3/videos?id=" + videoId +   "&key=AIzaSyB9JYAwiEPhKHsQblSWtxJ1gWYaKQjkUSU&part=snippet,contentDetails,statistics,status");
     const data = await json.json();
     setVideoData(data);
-    const jsonChannel = await fetch("https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=" + data?.items[0].snippet.channelId +"&key=AIzaSyDEwgieUKazTBKmC_2xS5WZZJ6OXSp_2zs");
+
+    const jsonChannel = await fetch("https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=" + data?.items[0].snippet.channelId +"&key=AIzaSyB9JYAwiEPhKHsQblSWtxJ1gWYaKQjkUSU");
     const jsonChannelData = await jsonChannel.json();
     setChannelData(jsonChannelData);
+    
+    const commentsData = await fetch("https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB9JYAwiEPhKHsQblSWtxJ1gWYaKQjkUSU&textFormat=plainText&part=snippet&videoId=" + videoId + "&maxResults=50");
+    const jsonCommentsData = await commentsData.json();
+    setCommentsData(jsonCommentsData);
   }
-
-  console.log(videoData);
-  console.log(channelData?.items[0]?.snippet?.thumbnails?.default?.url);
+  
   const channelImg = channelData?.items[0]?.snippet?.thumbnails?.default?.url;
+
+  if (!videoData) return <div>Loading...</div>
   return (
     <div className='flex px-10'>
       <div className='p-3'>
@@ -70,14 +77,19 @@ const WatchPage = () => {
           <button className=' text-center rounded-full p-2 bg-zinc-100  hover:bg-zinc-200'>
             <p className='font-extrabold flex mb-1'>. . .</p>
           </button>
-          
+        
       </div>
-      <h1>{videoData?.items[0].statistics.viewCount}</h1>
+      <h1>{videoData?.items[0].statistics.viewCount} Views</h1>
+      <div>
+          <Comments commentsData={commentsData} />
+      </div>
+      
       </div>
       
       <div>
           <VideoContainer />
       </div>
+      
     </div>
   )
 }
